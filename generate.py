@@ -24,7 +24,7 @@ def encode_sequences(sequences, tokenizer: PreTrainedTokenizer):
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description='LLMRec')
+    parser = argparse.ArgumentParser(description='TrieLLM')
     args = parser.parse_args()
     args.base_model = "meta-llama/Llama-3.2-1B-Instruct"
 
