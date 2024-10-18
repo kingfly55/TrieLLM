@@ -11,7 +11,7 @@ class Trie():
 class TrieMachine:
     def __init__(self, eos_token_id, sequences):
         self.eos_token_id = eos_token_id
-        self.root = Trie()  # 状态转换
+        self.root = Trie()
         self.initTrie(sequences)
 
     def initTrie(self, sequences):
@@ -40,10 +40,12 @@ class TrieLogitsProcessor(LogitsProcessor):
         for i, input_id in enumerate(input_ids):
             sequence = input_id.tolist()
             if self.last_token in sequence:
+                # we first figure out which state that the current state is at
                 index_from_end = len(sequence) - 1 - sequence[::-1].index(self.last_token)
                 sub_sequence = sequence[index_from_end + 1:]
                 cur = self.trie
 
+                # we then figure out where it is in the Trie
                 for s in sub_sequence:
                     if s in cur.children:
                         cur = cur.children[s]
@@ -52,7 +54,7 @@ class TrieLogitsProcessor(LogitsProcessor):
                         break
                 if cur:
                     next_states = cur.children
-                else: # 若选项不在树中，直接停止输出
+                else: # If it has already deviated from Trie, we early stop it and set its score to negative infinity
                     next_states = {self.eos_token_id}
                     scores[i, list(next_states)] = -1e10
 
@@ -62,7 +64,8 @@ class TrieLogitsProcessor(LogitsProcessor):
                 mask[i, valid_token_ids] = False
                 scores[i] = scores[i].masked_fill(mask[i], -float(1e12))
 
-                # # 如果有beam search的限制，如果候选数量少于beam search的带宽，会报错！
+                # If the number of candidates is smaller than the width of Beam Search, it will throw an ERROR!
+                # So we randomly choose some, but necessarily set the scores to negative infinity
                 if len(next_states) < self.num_beams:
                     complementary_ids = list(i for i in range(self.num_beams - len(next_states)))
                     scores[i, list(complementary_ids)] = -1e10
