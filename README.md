@@ -35,5 +35,5 @@ the first four choices are fixed and sequential ('<' → 'a' → '_' → '1'), w
 ### ✨✨✨✨ 
 - If this repository helps you, please star it. Thank you ~
 - If you have any questions, please feel free to contact me at kaysenn@163.com.
-- [[知乎]](https://zhuanlan.zhihu.com/p/1604769906)
+- 如何通过前缀树来控制LLM做文本生成？[[知乎]](https://zhuanlan.zhihu.com/p/1604769906)
 
