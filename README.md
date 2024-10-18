@@ -6,14 +6,14 @@ A simple example to control LLM for text generations via a Custom Trie (prefix t
 
 The large language models (LLMs) generate sentences by selecting tokens from the vocabulary one by one based on their probabilities.
 
-For example, given 3 three sequences,
+For example, given 3 three sequences to restrict the LLM during generation, allowing it to generate only one (or multiple in the case of Beam Search) from the following three sequences,
 
         <a_128><b_241><c_146><d_235>
         <a_171><b_57><c_141><d_231>
         <a_135><b_16><c_77><d_23>
 
 
-the first four choices are fixed and sequential ('<' → 'a' → '_' → '1'), with the fifth choice restricted to {'2', '7', '3'}.
+the first four choices are fixed and sequential ('<' → 'a' → '_' → '1'), while the fifth choice is restricted to {'2', '7', '3'}.
 
 ### Instruction
 
