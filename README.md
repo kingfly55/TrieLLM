@@ -1,7 +1,7 @@
-﻿### TrieLLM
+﻿### TrieLLM 
 
 
-### Introduction
+### Introduction [[知乎]](https://zhuanlan.zhihu.com/p/1604769906)
 A simple example to control LLM for text generations via a Custom Trie (prefix tree).
 
 The large language models (LLMs) generate complete sentences by selecting characters from the vocabulary one by one based on their probabilities.
