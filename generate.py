@@ -6,7 +6,6 @@ from trieLogists import Trie, TrieMachine, TrieLogitsProcessor
 import argparse
 
 
-# 从JSON文件读取允许的序列
 # Loading allowed sequences from a JSON file
 def load_allowed_sequences(json_file):
     with open(json_file, 'r') as f:
@@ -28,33 +27,27 @@ if __name__ == "__main__":
     args = parser.parse_args()
     args.base_model = "meta-llama/Llama-3.2-1B-Instruct"
 
-    # 加载模型和tokenizer
     # Loading Model and Tokenizer
     model = AutoModelForCausalLM.from_pretrained(args.base_model)
     tokenizer = AutoTokenizer.from_pretrained(args.base_model)
 
-    # 加载允许的序列
     # Loading allowed sequences
     allowed_sequences = load_allowed_sequences("allowed_sequences.json")['sequences']
 
-    # 将序列变成Tokenizer所支持的词表的序列
     # Encoding allowed sequences with Tokenizer, return the encoded sequences
     encoded_sequences = encode_sequences(allowed_sequences, tokenizer)
     trie = TrieMachine(tokenizer.eos_token_id, encoded_sequences).getRoot()
 
-    # 创建自定义的LogitsProcessor
     # Custom LogitsProcessor
     num_beams = 2
     logits_processor = LogitsProcessorList([TrieLogitsProcessor(trie, tokenizer, num_beams, ':')])
 
-    # 输入 prompt
     # Input prompt
     input_text = "The next token is:"
     input_ids = tokenizer(input_text, return_tensors="pt").input_ids
 
-    # 使用自定义LogitsProcessor生成输出
     # Using Custom LogitsProcessor to control LLM for generations
-    # Choice 1. 使用 beam search 生成 >>>>>>
+    # Choice 1. using beam search >>>>>>
     outputs = model.generate(input_ids,
                              logits_processor=logits_processor,
                              max_length=50,
@@ -72,10 +65,10 @@ if __name__ == "__main__":
     for output in outputs:
         print(output)
 
-    # # Choice 2. 直接使用 generate 生成 >>>>>>
+    # # Choice 2. directly generate >>>>>>
     # outputs = model.generate(input_ids,
     #                          logits_processor=logits_processor,
     #                          max_length=50,)
-    # # 解码生成的结果
+    # 
     # generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
     # print(generated_text)
