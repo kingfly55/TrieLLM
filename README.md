@@ -34,6 +34,7 @@ the first four choices are fixed and sequential ('<' → 'a' → '_' → '1'), w
 
 ### ✨✨✨✨ 
 - If this repository helps you, please star it. Thank you ~
+- A branch named "qwen1.5" based on Qwen2.5-1.5B is released, without requiring an access token. Please try.
 - If you have any question, please feel free to contact me at kaysenn@163.com.
 - 如何通过前缀树来控制LLM做文本生成？[[知乎]](https://zhuanlan.zhihu.com/p/1604769906)
 
