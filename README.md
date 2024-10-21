@@ -22,7 +22,7 @@ the first four choices are fixed and sequential ('<' → 'a' → '_' → '1'), w
     >> pip install -r requirements.txt
 
 
-#### (2) Apply for a granted access at [[Hugging Face]](https://huggingface.co/meta-llama/Llama-3.2-1B)
+#### (2) Apply for a granted access at [[Hugging Face]](https://huggingface.co/meta-llama/Llama-3.2-1B) Or try the other branch named [[qwen1.5]](https://github.com/WangXFng/TrieLLM/tree/qwen1.5)
 
     >> huggingface-cli login --token [YOUR TOKEN]
 
